@@ -1,4 +1,6 @@
-# typeScript
+<h1 align="center">
+typeScript
+</h1>
 
 ## 介绍
 
