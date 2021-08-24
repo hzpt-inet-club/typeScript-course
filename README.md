@@ -244,4 +244,261 @@ const text = {
 }
 ```
 
+### 函数类型约束
+
+```typescript
+export{}
+
+// 函数声明例子
+
+/**
+ * 第一个函数类型
+ * @param a 参数1
+ * @param b 参数2
+ * @returns 返回值为string类型
+ */
+function func1 (a : number,b : number) : string{
+    return "func1"
+}
+
+// 函数表达式的例子
+
+const func2 = function (a : number,b : number) : string{
+    return 'func2'
+}
+```
+
+### 任意类型
+
+```typescript
+export{}
+
+/**
+ * any 在TypeScript中不会检查，尽量少用
+ */
+
+function stringify(value:any){
+    return JSON.stringify(value)
+}
+
+let a:any = 'string'
+
+let b:any = false
+```
+
+### 隐式类型
+
+```typescript
+export{}
+
+//1. 首先我们定一个一个参数，但是不直接赋予对应的类型
+
+//这时候已经将a变量设置为number
+let a = 18 // let a: number
+
+//2. 再将a的值变为其他类型
+
+//会产生类型错误的问题
+a = "string" //Type 'string' is not assignable to type 'number'.
+```
+
+### 类型断言
+
+```typescript
+export{}
+
+//1. 假定这个nums有一个明确的接口
+
+const nums = [1,2,3,4]
+
+//2. 找到数组中第一个大于0的数字
+
+const res = nums.find(i => i > 0)
+
+//3. 断言res一定为number类型
+
+const num1 = res as number
+```
+
+## 接口
+
+```typescript
+export{}
+
+//接口最主要是拥有那些成员，并且成员类型是如何的
+
+//定义接口
+interface post{
+    title:string
+    body:string
+}
+
+//使用接口
+const hello:post = {
+    title:'this is title',
+    body:'this is body'
+}
+
+//这时候我们就需要让post对象中拥有title和body属性
+function printPost(post:post){
+    console.log(post.title)
+    console.log(post.body)
+}
+
+//可选成员的特性
+interface post1{
+    title:string
+    body:string
+    end?:string //添加?即可,这便是可选成员
+}
+
+//可以有end这个成员
+const demo1:post1 = {
+    title:'1',
+    body:'2',
+    end:'3'
+}
+
+//自然也可以没有end这个成员
+const demo2:post1 = {
+    title:'1',
+    body:'2',
+}
+
+//接口的只读属性
+
+interface post2{
+    title:string
+    body:string
+    readonly end:string //在成员的名字前面不在使用readonly关键字就完成了只读属性，一旦赋值就不可修改
+}
+
+//动态成员接口
+interface post3{
+    //key是名字，string是类型
+    [key:string]:string
+}
+```
+
+## 类
+
+> **用于描述一类具体事物的抽象特征。**
+
+### 基础用法 
+
+```typescript
+export{}
+
+// 类的基础使用
+
+//定义一个类
+class Persion{
+    name : string
+    age : number
+    constructor(name : string,age : number){
+        this.name = name
+        this.age = age
+    }
+
+    sayHello():void{
+        console.log(`hello , ${this.name}`)
+    }
+}
+
+// 类的成员访问修饰符
+
+//定义一个类
+class dog{
+    public name : string //将name属性变成共有属性
+    private age : number //将age变成私有属性,只能在内部访问
+    protected init : string //将init变成保护属性，只能在内部访问
+    constructor(name : string,age : number,init : string){
+        this.name = name
+        this.age = age
+        this.init = init
+    }
+
+    sayHello():void{
+        console.log(`hello , ${this.name}`)
+    }
+}
+
+// 类的继承
+
+class cat extends dog {
+    constructor(name:string , age:number){
+        super(name,age,"1");
+    }
+}
+
+//类的只读属性
+
+class persion2{
+    // 加上 readonly 即可
+    private readonly name : string 
+    private readonly age : number
+    constructor(name : string,age : number){
+        this.name = name
+        this.age = age
+    }
+
+    sayHello():void{
+        console.log(`hello , ${this.name}`)
+    }
+}
+```
+
+### 抽象类
+
+```typescript
+export{}
+
+
+abstract class Department {
+
+    constructor(public name: string) {
+    }
+
+    printName(): void {
+        console.log('Department name: ' + this.name);
+    }
+
+    abstract printMeeting(): void; // 必须在派生类中实现
+}
+
+class AccountingDepartment extends Department {
+
+    constructor() {
+        super('Accounting and Auditing'); // 在派生类的构造函数中必须调用 super()
+    }
+
+    printMeeting(): void {
+        console.log('The Accounting Department meets each Monday at 10am.');
+    }
+
+    generateReports(): void {
+        console.log('Generating accounting reports...');
+    }
+}
+```
+
+## 泛型
+
+```typescript
+export{}
+
+//不使用泛型
+function identity1(arg: number): number {
+    return arg;
+}
+
+//使用泛型
+function identity2<T>(arg: T): T {
+    return arg;
+}
+```
+
+## 结尾
+
+> **该项目并不是让大家通过该项目直接掌握TypeScript，该项目仅仅只是作为不敢接触TypeScript的同学的一份小蛋糕。如果想完全掌握TypeScript，可以去官网进行文档学习，我相信如果完成了该项目的所有代码，各位同学对于阅读TypeScript的文档肯定是易如反掌。**
 
